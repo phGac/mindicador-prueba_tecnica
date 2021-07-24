@@ -16,6 +16,8 @@
 </head>
 
 <body>
+    <button class="btn" onclick="(() => window.location.href = '/historicos')()">Mantenedor de UF</button>
+
     <form class="form-compare-indicators">
         <div class="row">
             <div class="col">

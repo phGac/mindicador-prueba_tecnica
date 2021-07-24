@@ -18,8 +18,6 @@
 <body>
     <h1>Historial UF</h1>
 
-    <!--<div id="grid"></div>-->
-
     <form id="add-data">
         <div class="form-group row">
             <label for="date" class="col-4 col-form-label">Fecha</label>
