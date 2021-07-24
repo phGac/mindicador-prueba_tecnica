@@ -1,0 +1,12 @@
+.form-compare-indicators {
+    margin: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.error-range {
+    font-size: 15px;
+    color: red;
+}
