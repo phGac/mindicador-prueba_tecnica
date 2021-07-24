@@ -1,5 +1,5 @@
 $('form').submit(function(e) {
-    e.preventDefault();
+    e.preventDefaults();
 
     const form = $(this);
     const date = form.find('#date').val();

@@ -9,11 +9,11 @@ class ApiUF extends BaseController
 	public function index()
 	{
 		$History = new HistoryUFModel();
-		$history = $History->orderBy('date', 'DESC')->paginate(10, 'default', 1);
+		$history = $History->orderBy('date', 'DESC')->paginate($_GET['length'], 'default', intval($_GET['start']));
 		$count = $History->countAllResults();
 
 		echo json_encode([
-			"draw" => 2,
+			"draw" => $_GET['draw'],
 			"recordsTotal" => $count,
 			"recordsFiltered" => $count,
 			'data' => $history,
@@ -28,16 +28,17 @@ class ApiUF extends BaseController
 		$History = new HistoryUFModel();
 		$history = $History->where([ 'date' => $date ])->find();
 
-		$success = false; $created_at = time();
+		$success = false; $created_at = time(); $id = null;
 		if(! $history) {
 			$success = true;
 			$History->insert([
 				'value' => $value,
 				'date' => $date,
 			]);
+			$id = $History->getInsertID();
 		}
 
-		echo json_encode([ 'success' => $success, 'data' => [ 'created_at' => $created_at ] ]);
+		echo json_encode([ 'success' => $success, 'data' => [ 'value' => $value, 'id' => $id, 'created_at' => $created_at ] ]);
 	}
 
 	public function update($date)

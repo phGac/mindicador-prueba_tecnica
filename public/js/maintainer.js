@@ -70,17 +70,38 @@
     $('#add-data').submit(function(event) {
         event.preventDefault();
         let form = $(this);
-        let date = form.find('#date').val();
-        let value = form.find('#value').val();
+        let dateEl = form.find('#date');
+        let valueEl = form.find('#value');
     
+        let data = {
+            date: dateEl.val(),
+            value: valueEl.val()
+        };
+
         $.ajax({
             type: "POST",
             url: '/api/maintainer',
-            data: { date, value },
-            success: function(data) {
-                console.log(data);
+            data: data,
+            success: function(data_response) {
+                dateEl.val('');
+                valueEl.val('');
+
+                data_response = JSON.parse(data_response);
+                console.log(data_response);
+                if(data_response.success) {
+                    /*
+                    let new_row = table.row.add({ 
+                        id: data_response.data.id, 
+                        date: data.date, 
+                        value: data.value, 
+                        updated_at: data_response.data.created_at, 
+                        created_at: data_response.data.created_at, 
+                    });
+                    window.new_row = new_row;
+                    */
+                   table.ajax.reload();
+                }
             },
-            dataType: 'text/json'
         });
     });
     
@@ -102,12 +123,13 @@
             url: `/api/maintainer/${data.id}`,
             data: undefined,
             success: function(data) {
-                console.log(data);
+                row.remove();
             },
             dataType: 'text/json'
         });
     });
 
+    window.table = table;
 })();
 
 function maintainer_edit(date) {
